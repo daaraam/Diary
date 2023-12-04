@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import DiaryEditor from './DiaryEditor';
+import DiaryList from './DiaryList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+	const dummyList = [
+		{
+			id: 1,
+			author: '홍길동',
+			content: '오늘은 기분이 별로다.',
+			emotion: 5,
+			created_date: new Date().getTime(),
+		},
+		{
+			id: 2,
+			author: '임꺽정',
+			content: '기분 최고!!',
+			emotion: 1,
+			created_date: new Date().getTime(),
+		},
+	];
+	return (
+		<div>
+			<DiaryEditor />
+			<DiaryList diaryList={dummyList} />
+		</div>
+	);
 }
-
-export default App;

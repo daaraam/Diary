@@ -48,10 +48,25 @@ export default function App() {
 	const onEdit = (targetId, newContent) => {
 		setData(data.map(item => (item.id === targetId ? { ...item, content: newContent } : item)));
 	};
+
+	const getDiaryAnalysis = () => {
+		console.log('일기 분석 시작');
+
+		const goodCount = data.filter(item => item.emotion >= 3).length;
+		const badCount = data.length - goodCount;
+		const goodRatio = (goodCount / data.length) * 100;
+		return { goodCount, badCount, goodRatio };
+	};
+	const { goodCount, badCount, goodRatio } = getDiaryAnalysis;
+
 	return (
-		<div>
+		<div className="App">
 			<DiaryEditor onCreate={onCreate} />
-			<DiaryList diaryList={data} onRemove={onRemove} onEdit={onEdit} />
+			<div>전체 일기 : {data.length}</div>
+			<div>기분 좋은 일기 개수 : {goodCount}</div>
+			<div>기분 나쁜 일기 개수 : {badCount}</div>
+			<div>기분 좋은 일기 비율 : {goodRatio}</div>
+			<DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
 		</div>
 	);
 }

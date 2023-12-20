@@ -1,12 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { DiaryDispatchContext } from './App';
 
-export default function DiaryItem({ author, content, emotion, created_date, onRemove, id, onEdit }) {
+const DiaryItem = ({ author, content, emotion, created_date, id }) => {
+	const { onRemove, onEdit } = useContext(DiaryDispatchContext);
+
 	const [isEdit, setIsEdit] = useState(false);
 	const [localContent, setLocalContent] = useState(content);
 	const localContentInput = useRef(0);
+
 	const toggleIsEdit = () => {
 		setIsEdit(!isEdit);
 	};
+
+	useEffect(() => {
+		console.log(`${id}번째 아이템 랜더`);
+	});
+
 	const handleRemove = () => {
 		onRemove(id);
 	};
@@ -27,8 +36,7 @@ export default function DiaryItem({ author, content, emotion, created_date, onRe
 	return (
 		<div className="DiaryItem">
 			<div className="info">
-				<span>작성자 : {author}</span> ｜ <nbsp />
-				<span>감정 점수 : {emotion}</span>
+				<span>작성자 : {author}</span> ｜<span>감정 점수 : {emotion}</span>
 				<br />
 				<span className="date">{new Date(created_date).toLocaleString()}</span>
 			</div>
@@ -61,4 +69,5 @@ export default function DiaryItem({ author, content, emotion, created_date, onRe
 			)}
 		</div>
 	);
-}
+};
+export default React.memo(DiaryItem);

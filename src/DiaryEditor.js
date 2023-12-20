@@ -1,21 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import { DiaryDispatchContext } from './App';
 
-const DiaryEditor = ({ onCreate }) => {
-	useEffect(() => {
-		console.log('DiaryEditor 랜더');
-	});
+const DiaryEditor = () => {
+	const { onCreate } = useContext(DiaryDispatchContext);
+	// 객체이기때문에 비구조할당으로 가져와야함
+	const authorInput = useRef();
+	const contentInput = useRef();
 	const [state, setState] = useState({
 		author: '',
 		content: '',
 		emotion: 1,
 	});
-	const authorInput = useRef();
-	const contentInput = useRef();
-
 	const handleChangeState = e => {
-		console.log(e.target.name);
-		console.log(e.target.value);
-
 		setState({
 			...state,
 			[e.target.name]: e.target.value,
@@ -51,7 +47,7 @@ const DiaryEditor = ({ onCreate }) => {
 			</div>
 
 			<div>
-				오늘의 감정 점수 : <nbsp />
+				오늘의 감정 점수 :
 				<select name="emotion" value={state.emotion} onChange={handleChangeState}>
 					{' '}
 					<option value={1}>1</option>
